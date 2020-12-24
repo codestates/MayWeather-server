@@ -7,6 +7,7 @@ const {
   signup,
   // login,
   content,
+  friends,
   mypage,
   // logout,
   // callback,
@@ -23,6 +24,9 @@ router.post("/signup", signup.post);
 
 // * GET /content
 router.get("/content", content.get);
+
+// * GET /friends
+router.get("/friends", friends.get);
 
 // * POST /mypage
 router.post("/mypage", mypage.post);
