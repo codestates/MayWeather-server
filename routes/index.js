@@ -2,17 +2,12 @@
 var express = require("express");
 var router = express.Router();
 
-const {
-    login,
-    logout,
-    signup,
-    home,
-    content,
-    mypage,
-    callback,
-    friends
-} = require("../controllers"); // 변경이 필요.
-//console.log("signup", signup);
+
+
+const signup = require("../controllers/signup"); // 변경이 필요.
+const content = require("../controllers/content"); // 변경이 필요.
+// console.log("signup", signup);
+
 
 // // * GET /
 // router.get("/", usersController.login.post);
@@ -26,14 +21,13 @@ router.post("/signup", signup.post);
 // * GET /content
 router.get("/content", content.get);
 
-// * GET /friends
-router.get("/friends", friends.get);
 
 // // * POST /mypage
 // router.post("/mypage", usersController.userinfo.get);
 
- // * POST /logout
-router.post("/logout", logout.post);
+// // * POST /logout
+// router.post("/logout", usersController.userinfo.get);
+
 
 // // * POST /callback Authorization
 // router.post("/callback", usersController.userinfo.get);
