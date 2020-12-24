@@ -1,3 +1,6 @@
+
+
+module.exports = {}
 // req.body // 아이디, 비밀번호, 이름, 이메일, 지역아이디 (1,2,3,4,5) 1
 
 // const userInfo = await User.findOrCreate( // 유저 만드는 건 ㅇㅋ

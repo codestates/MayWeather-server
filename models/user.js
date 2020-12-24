@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       // ! A.belongsToMany(B, { through: 'C' }); // A BelongsToMany B through the junction table C
       // ! 저희 코드에서 A에는 뭘 적어야 user모델을 가르킬까요?
-      models.User.hasMany(models.UserLocations, {
+      models.User.hasMany(models.UserLocation, {
         foreignKey: "userId", // 안적으면 자동 모델명_고유키 이름 자동 설정
         sourceKey: "id",
       });

@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Location.hasMany(models.UserLocations, {
+      models.Location.hasMany(models.UserLocation, {
         foreignKey: "locationId", // belongsTo의 포린키
         sourceKey: "id",
       });
