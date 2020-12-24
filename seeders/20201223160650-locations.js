@@ -1,0 +1,57 @@
+"use strict";
+
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    /**
+     * Add seed commands here.
+     *
+     * Example:
+     * await queryInterface.bulkInsert('location', [{
+     *   location: 'seoul',
+     *   isBetaMember: false
+     * }], {});
+     */
+
+    await queryInterface.bulkInsert(
+      "Locations",
+      [
+        {
+          location: "seoul",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          location: "incheon",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          location: "daegu",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          location: "gwangju",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          location: "busan",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+      {}
+    );
+  },
+
+  down: async (queryInterface, Sequelize) => {
+    /**
+     * Add commands to revert seed here.
+     *
+     * Example:
+     * await queryInterface.bulkDelete('location', null, {});
+     */
+    await queryInterface.bulkDelete("Locations", null, {});
+  },
+};
