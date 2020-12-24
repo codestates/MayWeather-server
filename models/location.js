@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Location.hasMany(models.UserLocations, {
+      models.Location.hasMany(models.UserLocation, {
+        // ! Locations 처럼 복수가 아니라 단수로 수정 부탁드립니다.
         foreignKey: "locationId", // belongsTo의 포린키
         sourceKey: "id",
       });
@@ -19,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   Location.init(
     // ? 여기서 외래 키 설정?
     {
-      locationName: DataTypes.STRING,
+      location: DataTypes.STRING,
     },
     {
       sequelize,
