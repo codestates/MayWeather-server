@@ -1,6 +1,6 @@
 
 
-module.exports = {}
+
 /* 
 회원
 비회원

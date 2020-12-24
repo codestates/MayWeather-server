@@ -1,34 +1,191 @@
+const { Location, User, UserLocation } = require("../models");
+// console.log("model>>>", model);
+//   Location: Location,
+//   User: User,
+//   UserLocation: UserLocation,
 
+module.exports = {
+  post: async (req, res) => {
+    const { userId, password, email, username, location } = req.body;
 
-module.exports = {}
-// req.body // 아이디, 비밀번호, 이름, 이메일, 지역아이디 (1,2,3,4,5) 1
+    const [user, created] = await User.findOrCreate({
+      where: {
+        userId: userId,
+      },
+      defaults: {
+        userId,
+        password,
+        email,
+        username,
+      },
+    });
+    // console.log("created", created); // boolean
+    // console.log("user>>>>", user);
+    /* 
+    { 
+        dataValues : { 
+            id: 1, userId: 'kimcoding', password: 'abc123', email : 'kimcoding@google.com', 
+            username: 'kimkim', updatedAt: 2020-12-23T15:59:25.832Z, createdAt: 2020-12-23T15:59:25.832Z
+        },
+        ...
+    }
+    */
 
-// const userInfo = await User.findOrCreate( // 유저 만드는 건 ㅇㅋ
-//    넣을 게 아이디, 비밀번호, 이름, 이메일
-//    김코딩 id 1  PK
-// )
+    const userPk = user.dataValues.id; // 1
 
-// const userPk = userInfo.dataValues.id  // 변수에 1 담겼습니다. -> 두 번째 가입자는 2 ... 반복
+    // location 지역별 id 알아내기 위해
 
-// if (req.body.locationId.length === 1) // else는 .. 머리 굴려봐야 겠씁니다
+    const locationInArr = location.split(",");
+    console.log("locationInArr>>>>", locationInArr);
 
-// const locationPK = req.body.locationID // 로케이션 두 개라면, Create 두 번 해야하는데..
+    if (locationInArr.length === 1) {
+      // 지역 1개일 때
+      const getLocation = await Location.findOne({
+        where: { location: locationInArr[0] },
+      });
+      // console.log("getLocation>>>", getLocation);
+      /*
+      {
+          dataValues: {
+              id: 1,
+              location: 'seoul',
+              createdAt: 2020-12-23T16:11:42.000Z,
+              updatedAt: 2020-12-23T16:11:42.000Z
+          },
+          ...
+      }
+      */
+      const locationPk = getLocation.dataValues.id; // 1 (seoul)
+      // console.log("locationPk", locationPk);
+      if (!created) {
+        // 생성되지 않았다면
+        res.status(409).json({
+          message: "userId exists",
+        });
+      } else {
+        // ','가 없으면 location 1개 ,else는 .. 머리 굴려봐야 겠씁니다 // 여기서가 아니라 위에서 getLocation 값 구할 떄부터 처리해야겠네
+        const joinTable = await UserLocation.create({
+          userId: userPk,
+          locationId: locationPk,
+        });
+        //   console.log("joinTable>>>", joinTable);
+        /*
+        {
+          {
+          dataValues: {
+              id: 1,
+              userId: 2,
+              locationId: 1,
+              updatedAt: 2020-12-23T16:23:10.223Z,
+              createdAt: 2020-12-23T16:23:10.223Z
+           },
+        }
+        */
+        if (joinTable) {
+          res.status(201).json({
+            //    const { userId, password, email, username, location } = req.body;
+            userId,
+            email,
+            username,
+            location,
+          });
+        }
+      }
+    }
+    // 지역 2개 일 때
+    else if (locationInArr.length === 2) {
+      const getLocation1 = await Location.findOne({
+        where: { location: locationInArr[0] },
+      });
+      const getLocation2 = await Location.findOne({
+        where: { location: locationInArr[1] },
+      });
+      console.log("getLocation1>>>>", getLocation1);
+      console.log("getLocation2>>>>", getLocation2);
+      const location1Pk = getLocation1.dataValues.id; // 1 (seoul)
+      const location2Pk = getLocation2.dataValues.id; // 1 (seoul)
+      //
+      if (!created) {
+        // 생성되지 않았다면
+        res.status(409).json({
+          message: "userId exists",
+        });
+      } else {
+        // ','가 없으면 location 1개 ,else는 .. 머리 굴려봐야 겠씁니다 // 여기서가 아니라 위에서 getLocation 값 구할 떄부터 처리해야겠네
+        const joinTable1 = await UserLocation.create({
+          userId: userPk,
+          locationId: location1Pk,
+        });
+        const joinTable2 = await UserLocation.create({
+          userId: userPk,
+          locationId: location2Pk,
+        });
+        //   console.log("joinTable>>>", joinTable);
+        /*
+    {
+      {
+      dataValues: {
+          id: 1,
+          userId: 2,
+          locationId: 1,
+          updatedAt: 2020-12-23T16:23:10.223Z,
+          createdAt: 2020-12-23T16:23:10.223Z
+       },
+    }
+    */
+        console.log;
+        if (joinTable1 && joinTable2) {
+          const locations =
+            getLocation1.dataValues.location +
+            "," +
+            getLocation2.dataValues.location;
+          res.status(201).json({
+            //    const { userId, password, email, username, location } = req.body;
+            userId,
+            email,
+            username,
+            location: locations,
+          });
+        }
+      }
+    }
+  },
+};
 
-// // 컬럼 넣을 겁니다.
-// UserLocation.Create(
-// where:{
-//   userInfo.dataValues.id : userPk // 김코딩
+// 중복 발생, 지역1개냐 2개냐 약간은 다르지만 함수화 시키는 리팩토링 필요할 듯 합니다.
+// if (!created) {
+//   // 생성되지 않았다면
+//   res.status(409).json({
+//     message: "userId exists",
+//   });
+// } else {
+//   // ','가 없으면 location 1개 ,else는 .. 머리 굴려봐야 겠씁니다 // 여기서가 아니라 위에서 getLocation 값 구할 떄부터 처리해야겠네
+//   const joinTable = await UserLocation.create({
+//     userId: userPk,
+//     locationId: locationPk,
+//   });
+//   //   console.log("joinTable>>>", joinTable);
+//   /*
+//   {
+//     {
+//     dataValues: {
+//         id: 1,
+//         userId: 2,
+//         locationId: 1,
+//         updatedAt: 2020-12-23T16:23:10.223Z,
+//         createdAt: 2020-12-23T16:23:10.223Z
+//      },
+//   }
+//   */
+//   if (joinTable) {
+//     res.status(201).json({
+//       //    const { userId, password, email, username, location } = req.body;
+//       userId,
+//       email,
+//       username,
+//       location,
+//     });
+//   }
+//     }
+//   },
 // }
-//   컬럼 userid : userPk,
-//   컬럼 locationId : locationPK 1
-
-//     김코딩이 서울이랑 인천을 설정한 것을 넣어야 겠네요?
-//     유저테이블 id 참조 <- userid(FK) 1 : locationid(FK) :1 -> 로케이션 테이블 id 참조
-// )
-
-// location // 처음에 5개 지역 만들어 두겠네요
-// id:1 PK
-// locationName:서울,
-// id:2
-// locationName:인천
-// ...
