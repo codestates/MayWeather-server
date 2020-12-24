@@ -13,9 +13,7 @@ module.exports = {
      */
 
     await queryInterface.bulkInsert(
-
-      "locations",
-
+      "Locations",
       [
         {
           location: "seoul",
@@ -28,7 +26,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          location: "deagu",
+          location: "daegu",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -54,6 +52,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('location', null, {});
      */
-    await queryInterface.bulkDelete("locations", null, {});
+    await queryInterface.bulkDelete("Locations", null, {});
   },
 };

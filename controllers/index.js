@@ -1,10 +1,10 @@
 module.exports = {
-    login: require('./login'),
-    logout: require('./logout'),
-    signup: require('./signup'),
-    home: require('./home'),
-    content: require('./content'),
-    mypage: require('./mypage'),
-    callback: require('./callback'),
-    friends: require('./friends')
+  // home: require("./home"),
+  signup: require("./signup"),
+  // login: require("./login"),
+  content: require("./content"),
+  // friends : require("./friends")
+  mypage: require("./mypage"),
+  // logout: require("./logout"),
+  // callback: require("./callback"),
 };
