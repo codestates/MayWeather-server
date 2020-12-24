@@ -1,30 +1,36 @@
 // ? 이 파일 실행시키면 models/index.js 실행되네?
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 
-const signup = require("../controllers/signup"); // 변경이 필요.
-const content = require("../controllers/content"); // 변경이 필요.
-// console.log("signup", signup);
+const {
+  // home,
+  signup,
+  // login,
+  content,
+  mypage,
+  // logout,
+  // callback,
+} = require("../controllers");
 
-// // * GET /
-// router.get("/", usersController.login.post);
+// * GET /
+// router.get("/", home.get);
 
 // * POST /signup
 router.post("/signup", signup.post);
 
-// // * POST /login
-// router.post("/login", usersController.userinfo.get);
+// * POST /login
+// router.post("/login", login.post);
 
 // * GET /content
 router.get("/content", content.get);
 
-// // * POST /mypage
-// router.post("/mypage", usersController.userinfo.get);
+// * POST /mypage
+router.post("/mypage", mypage.post);
 
-// // * POST /logout
-// router.post("/logout", usersController.userinfo.get);
+// * POST /logout
+// router.post("/logout", logout.post);
 
-// // * POST /callback Authorization
-// router.post("/callback", usersController.userinfo.get);
+// * POST /callback Authorization
+// router.post("/callback", callback.post);
 
 module.exports = router;

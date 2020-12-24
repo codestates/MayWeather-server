@@ -12,9 +12,31 @@ req
 크레덴셜 옵션 필요.
 
 */
+const { Location, User, UserLocation } = require("../models");
+// console.log("model>>>", model);
+//   Location: Location,
+//   User: User,
+//   UserLocation: UserLocation,
 
 module.exports = {
   get: async (req, res) => {
-    res.send("test");
+    console.log("req.session", req.session);
+    console.log("req.session.id", req.session.id);
+    // const sess = req.session.userId; // 로그인할 때 유저의 PK 담아줬음.
+    // console.log("sess", sess);
+    // const userInfo = await User.findOne({
+    //   where: {
+    //     id: sess,
+    //   },
+    // });
+
+    // console.log("userInfo", userInfo);
+
+    // res.status(200).json({
+    //   userId,
+    //   username,
+    //   email,
+    //   location,
+    // });
   },
 };
