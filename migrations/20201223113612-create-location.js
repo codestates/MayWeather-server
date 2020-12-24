@@ -12,7 +12,7 @@ module.exports = {
         //   key: "id",
         // },
       },
-      locationName: {
+      location: {
         type: Sequelize.STRING,
       },
       createdAt: {

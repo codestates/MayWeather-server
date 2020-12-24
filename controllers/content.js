@@ -12,3 +12,9 @@ req
 크레덴셜 옵션 필요.
 
 */
+
+module.exports = {
+  get: async (req, res) => {
+    res.send("test");
+  },
+};
