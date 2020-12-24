@@ -13,7 +13,9 @@ module.exports = {
      */
 
     await queryInterface.bulkInsert(
+
       "locations",
+
       [
         {
           location: "seoul",
