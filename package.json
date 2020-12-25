@@ -25,6 +25,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "https": "^1.0.0",
+    "moment": "^2.29.1",
     "mysql2": "^2.2.5",
     "sequelize": "^6.3.5"
   },

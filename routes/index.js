@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  // home,
+  home,
   signup,
   login,
   content,
@@ -13,9 +13,8 @@ const {
   callback,
 } = require("../controllers");
 
-
 // * GET /
-// router.get("/", home.get);
+router.get("/", home.get);
 
 // * POST /signup
 router.post("/signup", signup.post);
