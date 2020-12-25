@@ -20,34 +20,53 @@
 // 회원가입 -> 로그인 // ! 다시 세션 또 받잖아요. (회원 로그인 시 덮어씌울 수 도 있겠네요.)
 // req.ssession.userId = 'seoul' -> req.ssession.userId = 1
 // -> 멤버 // ! req.ssession.userId
+const { User } = require("../models");
 
 module.exports = {
-  post: (req, res) => {
-    // ! 1.비회원 세션 로그인 // 피쳐 8!
-    // ? 클라이언트가 맨 처음에 상태 다 달라고 했으니까, 응답할게 딱히 없네요.
-    const { location } = req.body; // 1개 선택 seoul or 2개 선택 'incheon,daegu'
-    console.log("location>>>>", location);
+    post: async (req, res) => {
+        try {
+            // ! 1.비회원 세션 로그인 // 피쳐 8!
+            // ? 클라이언트가 맨 처음에 상태 다 달라고 했으니까, 응답할게 딱히 없네요.
+            const { location, userId, password } = req.body; // 1개 선택 seoul or 2개 선택 'incheon,daegu'
+            console.log("location>>>>", location);
 
-    const locationArr = location.split(","); // ['incheon','daegu']
+            if (location) {
+                const locationArr = location.split(","); // ['incheon','daegu']
+                console.log("locationArr>>>>", locationArr);
+                if (locationArr.length === 1) {
+                    req.session.userId = locationArr[0]; // seoul,
+                    res.status(200).json({
+                        message: "ok",
+                    });
+                } else if (locationArr.length === 2) {
+                    // express.session 라이브러리를 사용하면, 자동으로 세이브 메서드가 요청 끝날 때 마다 호출됨.
+                    // save메서드 사용안해도 req.세션.키 = 값 꼴로 사용가능.
+                    req.session.userId1 = locationArr[0]; // seoul,
+                    req.session.userId2 = locationArr[1]; // busan,
+                    res.status(200).json({
+                        message: "ok",
+                    });
+                }
+            } else {
+                // ! 2.회원 세션 로그인  // 피쳐 9!
+                const userInfo = await User.findOne({
+                    where: { userId: userId, password: password },
+                })
 
-    if (locationArr.length === 1) {
-      req.session.userId = locationArr[0]; // seoul,
-      res.status(200).json({
-        message: "ok",
-      });
-    } else if (locationArr.length === 2) {
-      // express.session 라이브러리를 사용하면, 자동으로 세이브 메서드가 요청 끝날 때 마다 호출됨.
-      // save메서드 사용안해도 req.세션.키 = 값 꼴로 사용가능.
-      req.session.userId1 = locationArr[0]; // seoul,
-      req.session.userId2 = locationArr[1]; // seoul,
-      res.status(200).json({
-        message: "ok",
-      });
+                if (!userInfo) {
+                    req.status(400).send({ message: 'Not authorized' })
+
+                } else {
+                    req.session.userId = userInfo.dataValues.id
+                    res.status(200).json({
+                        message: "ok",
+                    })
+                }
+            }
+        }
+        catch (err) { console.log(err) } // catch 안하면 에러가 나네요? 
     }
-
-    // ! 2.회원 세션 로그인  // 피쳐 9!
-  },
-};
+}
 
 // 컨텐트 겟 요청을 보내서 회원정보를 가지고 오는데 돌려달라고 하는 정보 중에 페이보릿 지역도 돌려달라고 함.
 // 비회원도 돌려줘야할까요?
