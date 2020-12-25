@@ -26,19 +26,20 @@ module.exports = {
     // ! 1.비회원 세션 로그인 // 피쳐 8!
     // ? 클라이언트가 맨 처음에 상태 다 달라고 했으니까, 응답할게 딱히 없네요.
     const { location } = req.body; // 1개 선택 seoul or 2개 선택 'incheon,daegu'
+    console.log("location>>>>", location);
 
     const locationArr = location.split(","); // ['incheon','daegu']
 
     if (locationArr.length === 1) {
-      req.ssession.userId = locationArr[0]; // seoul,
+      req.session.userId = locationArr[0]; // seoul,
       res.status(200).json({
         message: "ok",
       });
     } else if (locationArr.length === 2) {
       // express.session 라이브러리를 사용하면, 자동으로 세이브 메서드가 요청 끝날 때 마다 호출됨.
       // save메서드 사용안해도 req.세션.키 = 값 꼴로 사용가능.
-      req.ssession.userId1 = locationArr[0]; // seoul,
-      req.ssession.userId2 = locationArr[1]; // seoul,
+      req.session.userId1 = locationArr[0]; // seoul,
+      req.session.userId2 = locationArr[1]; // seoul,
       res.status(200).json({
         message: "ok",
       });

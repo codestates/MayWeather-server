@@ -5,7 +5,7 @@ const router = express.Router();
 const {
   // home,
   signup,
-  // login,
+  login,
   content,
   friends,
   mypage,
@@ -20,7 +20,7 @@ const {
 router.post("/signup", signup.post);
 
 // * POST /login
-// router.post("/login", login.post);
+router.post("/login", login.post);
 
 // * GET /content
 router.get("/content", content.get);
