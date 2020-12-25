@@ -15,7 +15,7 @@ module.exports = {
 
     //1.
     console.log("req.body.authorizationCode>>>>", req.body.authorizationCode);
-    const code = req.body.authorizationCode;
+    const code = '6489d61ba0fdf27beb16' //req.body.authorizationCode;
 
     //2,3. POST https://github.com/login/oauth/access_token
     const accessToken = await axios.post(

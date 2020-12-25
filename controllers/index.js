@@ -5,6 +5,6 @@ module.exports = {
   content: require("./content"),
   friends: require("./friends"),
   mypage: require("./mypage"),
-  // logout: require("./logout"),
-  // callback: require("./callback"),
+ logout: require("./logout"),
+ callback: require("./callback"),
 };

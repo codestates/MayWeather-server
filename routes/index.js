@@ -9,9 +9,10 @@ const {
   content,
   friends,
   mypage,
-  // logout,
-  // callback,
+  logout,
+  callback,
 } = require("../controllers");
+
 
 // * GET /
 // router.get("/", home.get);
@@ -32,9 +33,9 @@ router.get("/friends", friends.get);
 router.post("/mypage", mypage.post);
 
 // * POST /logout
-// router.post("/logout", logout.post);
+router.post("/logout", logout.post);
 
 // * POST /callback Authorization
-// router.post("/callback", callback.post);
+router.post("/callback", callback.post);
 
 module.exports = router;
