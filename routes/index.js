@@ -1,4 +1,4 @@
-// ? 이 파일 실행시키면 models/index.js 실행되네?
+// ? 이 파일 실행시키면 models/index.js 실행되네??
 const express = require("express");
 const router = express.Router();
 
@@ -26,7 +26,7 @@ router.post("/login", login.post);
 router.get("/content", content.get);
 
 // * GET /friends
-router.get("/friends", friends.get);
+router.post("/friends", friends.post);
 
 // * POST /mypage
 router.post("/mypage", mypage.post);
