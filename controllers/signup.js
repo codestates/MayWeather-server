@@ -60,7 +60,7 @@ module.exports = {
       if (!created) {
         // 생성되지 않았다면
         res.status(409).json({
-          message: "userId exists",
+          message: "UserId exists",
         });
       } else {
         // ','가 없으면 location 1개 ,else는 .. 머리 굴려봐야 겠씁니다 // 여기서가 아니라 위에서 getLocation 값 구할 떄부터 처리해야겠네
@@ -108,7 +108,7 @@ module.exports = {
       if (!created) {
         // 생성되지 않았다면
         res.status(409).json({
-          message: "userId exists",
+          message: "UserId exists",
         });
       } else {
         // ','가 없으면 location 1개 ,else는 .. 머리 굴려봐야 겠씁니다 // 여기서가 아니라 위에서 getLocation 값 구할 떄부터 처리해야겠네
@@ -156,7 +156,7 @@ module.exports = {
 // if (!created) {
 //   // 생성되지 않았다면
 //   res.status(409).json({
-//     message: "userId exists",
+//     message: "UserId exists",
 //   });
 // } else {
 //   // ','가 없으면 location 1개 ,else는 .. 머리 굴려봐야 겠씁니다 // 여기서가 아니라 위에서 getLocation 값 구할 떄부터 처리해야겠네

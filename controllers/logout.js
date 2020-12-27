@@ -20,12 +20,19 @@ module.exports = {
 
     //////////
 
-    if (!req.session.userId) {
-      res.status(400).send("who are you?");
+    if (!req.session.userId && !req.session.userId1) {
+      // res.status(400).send("who are you?");
+      res.status(400).json({
+        message: "Not authorized",
+      });
     } else {
-      //세션을 파괴해준다.
+      // 세션을 파괴해준다.
+      // 비회원 로그인 -> 회원 로그인 하면, 비회원, 회원 세션 둘 다 있는데, 회원 로그아웃하면 모든 세션 다 파괴해서 모든 상태 로그아웃 시킴
       req.session.destroy(() => {
-        res.status(205).send("goodbye~~~");
+        // res.status(205).send("goodbye~~~"); // ! API 문서 'ok'였는데 'Logout Completed'로 바꿨습니다.
+        res.status(205).json({
+          message: "Logout completed",
+        });
       });
     }
   },

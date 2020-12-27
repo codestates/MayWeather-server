@@ -6,15 +6,19 @@ const { Location, User, UserLocation } = require("../models");
 
 module.exports = {
   post: async (req, res) => {
+    const id = req.session.userId;
     const { userId, prevLocation, location } = req.body;
     // console.log("userId>>>>", userId); // kimcodingzzang3
     // console.log("prevLocation>>>>", prevLocation); // seoul
     // console.log("location>>>>", location); // busan
-    // ! 유저 아이디 찾기 위함 (로그인 구현하면 where조건에 세션아이디로 찾는 방식으로 수정해보기)
     const getUserInfo = await User.findOne({
       // 유저 ID 찾기
-      where: { userId },
+      where: { id },
     });
+    console.log(
+      "🚀 ~ file: mypage.js ~ line 18 ~ post: ~ getUserInfo",
+      getUserInfo
+    );
 
     // console.log("getUserInfo", getUserInfo);
     /*
@@ -98,7 +102,7 @@ module.exports = {
         });
       } else {
         res.status(404).json({
-          message: "Not Authorized",
+          message: "Not authorized",
         });
       }
     };
