@@ -1,4 +1,4 @@
-// ! OAuth
+// !! OAuth
 require("dotenv").config();
 
 const client_id = process.env.GITHUB_CLIENT_ID;
