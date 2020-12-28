@@ -11,6 +11,14 @@ module.exports = {
     // console.log("userId>>>>", userId); // kimcodingzzang3
     // console.log("prevLocation>>>>", prevLocation); // seoul
     // console.log("location>>>>", location); // busan
+
+    // ! req.session.userId 유효성 검사 추가
+    if (!id) {
+      res.status(404).json({
+        message: "Not Found",
+      });
+    }
+
     const getUserInfo = await User.findOne({
       // 유저 ID 찾기
       where: { id },
