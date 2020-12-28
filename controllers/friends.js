@@ -11,6 +11,12 @@ module.exports = {
 
     // 아래 로직 가기 전에 user가 찾는 location이 user가 선택한 지역이 맞는지 확인해야함.
 
+    // ! 아래에서 끌어올린 req.session.userId 유효성 검사
+    if (!userId) {
+      res.status(404).json({
+        message: "Not Found",
+      });
+    }
     const isUserLocation = await UserLocation.findAll({
       attributes: ["locationId"],
       where: {
@@ -99,12 +105,14 @@ module.exports = {
       res.status(404).json({
         message: "Not Found",
       });
-    } else if (!userId) {
-      //   res.status(401).send("who are you?");
-      res.status(404).json({
-        message: "Not Found",
-      });
-    } else if (hasUserLocation && userId) {
+    } // ! 유저아이디 유효성 검사가 여기 위치하면 위에 userId 쓰는 로직에서 이미 에러가 남. 이 유효성 검사 위로 올리기
+    // else if (!userId) {
+    //   //   res.status(401).send("who are you?");
+    //   res.status(404).json({
+    //     message: "Not Found",
+    //   });
+    // }
+    else if (hasUserLocation && userId) {
       // locationId 찾기 (조인테이블에서 req.session.userId 와 userId가 같은 경우의 locationId 를 탐색)
       const locationInfo = await Location.findOne({
         where: {
