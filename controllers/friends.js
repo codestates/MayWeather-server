@@ -193,9 +193,9 @@ module.exports = {
           [sequelize.fn("DISTINCT", sequelize.col("userId")), "userId"],
         where: {
           locationId: locationInfo.dataValues.id,
-          //{ [Op.or]: locaIdArr },
+          //{ [Op.or]: locaIdArr }, // ! 이 친구를
           // .ne 는 '같지 않은 것' 을 의미한다. -> userId !== req.session.userId
-          userId: { [Op.ne]: userId },
+          userId: { [Op.ne]: userId }, // ! 이거로 바꿨습니다. 자신을 제외한 무조건 같은 지역 친구만 나올 수 있도록 하였습니다.
         },
         //3개 이하의 row만 주세요.
         order: sequelize.literal("rand()"), // ? 중복 제거 어떻게?

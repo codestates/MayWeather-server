@@ -275,8 +275,10 @@ module.exports = {
     // api.openweathermap.org/data/2.5/weather?id={city id}&appid={API key}
 
     // ! 함수화
-    const setupCurrentData = (num) => {
+    const setupCurrentData = (num, cityName) => {
+      // console.log("?!?!?!?!?!??", "currentWeather" + cityName.data.main.temp);
       weatherData.currentWeather[num].currentTemp =
+        // ! 여기 수정해야함. 다 서울로 현재 날씨 나옴
         currentWeatherSeoul.data.main.temp;
       weatherData.currentWeather[num].currentWeatherIcon =
         currentWeatherSeoul.data.weather[0].icon;
@@ -286,31 +288,32 @@ module.exports = {
     const currentWeatherSeoul = await axios.get(
       `http://api.openweathermap.org/data/2.5/weather?id=1835847&appid=${WEATHER_API_KEY}&units=metric`
     );
-    setupCurrentData(0);
+
+    setupCurrentData(0, "Seoul");
 
     // 2.인천
     const currentWeatherIncheon = await axios(
       `http://api.openweathermap.org/data/2.5/weather?id=1843561&appid=${WEATHER_API_KEY}&units=metric`
     );
-    setupCurrentData(1);
+    setupCurrentData(1, "Incheon");
 
     // 3.대구
     const currentWeatherDaegu = await axios(
       `http://api.openweathermap.org/data/2.5/weather?id=1835327&appid=${WEATHER_API_KEY}&units=metric`
     );
-    setupCurrentData(2);
+    setupCurrentData(2, "Daegu");
 
     // 4.광주
     const currentWeatherGwangju = await axios(
       `http://api.openweathermap.org/data/2.5/weather?id=1841808&appid=${WEATHER_API_KEY}&units=metric`
     );
-    setupCurrentData(3);
+    setupCurrentData(3, "Gwangju");
 
     // 5.부산
     const currentWeatherBusan = await axios(
       `http://api.openweathermap.org/data/2.5/weather?id=1838519&appid=${WEATHER_API_KEY}&units=metric`
     );
-    setupCurrentData(4);
+    setupCurrentData(4, "Busan");
 
     // ! if문 조건에 모든 API요청이 성공, weatherDat에 필요한 데이터 다 담았냐는 물음을 써야하는데 복잡해서 일단 weatherData가 있냐 없냐로 구분
     if (weatherData) {
