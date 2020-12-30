@@ -16,25 +16,30 @@ module.exports = {
     try {
       // ! 1.비회원 세션 로그인 /피쳐 8!
       // ? 클라이언트가 맨 처음에 상태 다 달라고 했으니까, 응답할게 딱히 없네요.
-      const { location, userId, password } = req.body; // 1개 선택 seoul or 2개 선택 'incheon,daegu'
-      console.log("location>>>>", location);
+      const { location, userId, password } = req.body;
+      console.log("location>>>>", location); // 1개 선택 'seoul' or 2개 선택 'incheon,daegu'
 
       if (location) {
         const locationArr = location.split(","); // 문자열 -> 배열 만듦 ['incheon','daegu']
-        console.log("locationArr>>>>", locationArr);
+
         if (locationArr.length === 1) {
           // ! 비회원 세션 객체 구분하기 위해 userId + 숫자 형식을 취하겠습니다.
           req.session.userId1 = locationArr[0]; // seoul,
           res.status(200).json({
             message: "Ok",
+            // ! 27번 임시 대체
+            nonMember1: locationArr[0],
           });
         } else if (locationArr.length === 2) {
-          // express.session 라이브러리를 사용하면, 자동으로 세이브 메서드가 요청 끝날 때 마다 호출됨.
+          // express.session 라이브러리를 사용하면, 자동으로  세이브 메서드가 요청 끝날 때 마다 호출됨.
           // save메서드 사용안해도 req.세션.키 = 값 꼴로 사용가능.
           req.session.userId1 = locationArr[0]; // seoul,
           req.session.userId2 = locationArr[1]; // busan,
           res.status(200).json({
             message: "Ok",
+            // ! 36,37번 임시 대체
+            nonMember1: locationArr[0],
+            nonMember2: locationArr[1],
           });
         }
       }
@@ -52,8 +57,10 @@ module.exports = {
         if (!userInfo) {
           res.status(400).json({ message: "Not authorized" });
         } else {
-          req.session.userId = userInfo.dataValues.id;
+          // req.session.userId = userInfo.dataValues.id;  // 1
           res.status(200).json({
+            // ! 60번 줄 임시 대체
+            userId: userInfo.dataValues.id,
             message: "Ok",
           });
         }
