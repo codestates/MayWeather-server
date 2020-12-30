@@ -17,10 +17,10 @@ const options = {
   dialect: "mysql",
 };
 
-const connection = mysql.createConnection(options);
-connection.connect();
+// const connection = mysql.createConnection(options);
+// connection.connect();
 
-const sessionStore = new MySQLStore(connection);
+// const sessionStore = new MySQLStore(connection);
 
 app.use(
   session({
@@ -39,7 +39,7 @@ app.use(
       httpOnly: true, // No JS
       secure: true, // HTTPS Protocol
     },
-    store: sessionStore,
+    // store: sessionStore,
     // store : new RedisStore({})
   })
 );
