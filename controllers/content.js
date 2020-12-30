@@ -6,31 +6,46 @@ module.exports = {
   get: async (req, res) => {
     console.log("req.session.userId in content.js>>>>", req.session.userId);
 
+    // session 대신 req.body.userId로 대체
+
     // 비회원, 회원 둘 중 하나도 로그인 안해서 세션 객체 없을 때
-    if (!req.session.userId && !req.session.userId1) {
+    // if (!req.session.userId && !req.session.userId1) {
+    // ! 12번 임시 대체
+    if (!req.body.nonMember1 && !req.body.nonMember2) {
       res.status(401).json("Not authorized");
     }
 
     // ! 비회원 로그인 했을 때 로직 시작
-    else if (!req.session.userId && req.session.userId1) {
+    // else if (!req.session.userId && req.session.userId1) {
+    else if (!req.body.userId && req.body.nonMember1) {
+      // !회원x  비회원o
       // 비회원 세션 아이디에는 지역이름이 들어있음.
-      location = req.session.userId1; // ex) location = 'seoul' 담아줌
+      // location = req.session.userId1; // ex) location = 'seoul' 담아줌
+      // ! 22번 줄 임시 대체
+      location = req.body.nonMember1;
       // 비회원이 지역 2개 선택했다면?
-      if (req.session.userId2) {
-        location = location + "," + req.session.userId2;
+      // if (req.session.userId2) {
+      // location = location + "," + req.session.userId2;
+      // ! 26~27 임시 대체
+      if (req.body.nonMember2) {
+        location = location + "," + req.body.nonMember2;
       }
       res.status(200).json({
-        location,
+        location, // ex) 'seoul' or 'seoul, incheon'
       });
     }
     //---------------------------------------------------------------------
     // ! 회원 로그인 했을 때 로직 시작
     // ! session.userId 가 있는 경우
-    else if (req.session.userId) {
+    // else if (req.session.userId) {
+    // ! 39 임시대체
+    else if (req.body.userId) {
       const userInfo = await User.findOne({
         attributes: ["userId", "email", "username"],
         where: {
-          id: req.session.userId,
+          // id: req.session.userId,
+          // ! 임시대체
+          id: req.body.userId,
         },
       });
       // console.log(userInfo)
@@ -50,7 +65,9 @@ module.exports = {
       const locaId = await UserLocation.findAll({
         attributes: ["locationId"],
         where: {
-          userId: req.session.userId,
+          // userId: req.session.userId,
+          // !임시대체
+          userId: req.body.userId,
         },
       });
       // console.log("🚀 ~ file: content.js ~ line 52 ~ get: ~ locaId", locaId);

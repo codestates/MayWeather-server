@@ -4,7 +4,9 @@ const Op = sequelize.Op;
 
 module.exports = {
   post: async (req, res) => {
-    const { userId } = req.session;
+    // const { userId } = req.session;
+    // ! test
+    const { userId } = req.body;
     console.log("🚀 ~ file: friends.js ~ line 8 ~ post: ~ userId", userId); // 5
     const { location } = req.body;
     console.log("🚀 ~ file: friends.js ~ line 10 ~ post: ~ location", location); // seoul
