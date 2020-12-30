@@ -29,7 +29,7 @@ module.exports = {
             message: "Ok",
           });
         } else if (locationArr.length === 2) {
-          // express.session 라이브러리를 사용하면, 자동으로 세이브 메서드가 요청 끝날 때 마다 호출됨.
+          // express.session 라이브러리를 사용하면, 자동으로  세이브 메서드가 요청 끝날 때 마다 호출됨.
           // save메서드 사용안해도 req.세션.키 = 값 꼴로 사용가능.
           req.session.userId1 = locationArr[0]; // seoul,
           req.session.userId2 = locationArr[1]; // busan,
