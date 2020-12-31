@@ -89,7 +89,6 @@ module.exports = {
     //---------------
     // 유저가 자신의 지역으로 선택했던 지역의 친구를 찾는게 아닌 경우 &&  userId 없는 경우 (로그인이 안된 경우)
     if (getLocation.length === 0) {
-      //   res.status(401).send("who are you?");
       res.status(404).json({
         message: "Not Found",
       });
