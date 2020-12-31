@@ -20,24 +20,19 @@ module.exports = {
 
     //////////
 
-    // if (!req.session.userId && !req.session.userId1) {
-      // ! test
-      if (!req.body.nonMember1 && !req.body.userId) {
+    if (!req.session.userId && !req.session.userId1) {
       res.status(400).json({
         message: "Not authorized",
       });
     } else {
       // 세션을 파괴해준다.
       // 비회원 로그인 -> 회원 로그인 하면, 비회원, 회원 세션 둘 다 있는데, 회원 로그아웃하면 모든 세션 다 파괴해서 모든 상태 로그아웃 시킴
-      // req.session.destroy(() => {
-      // ! test
-      res.status(205).json({
+      req.session.destroy(() => {
+        // ! test
+        res.status(205).json({
           message: "Logout completed",
-          userId = null,
-          nonMember1 = null,
-          nonMember2 = null
         });
-      // });
+      });
     }
   },
 };

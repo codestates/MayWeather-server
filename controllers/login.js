@@ -37,9 +37,6 @@ module.exports = {
           req.session.userId2 = locationArr[1]; // busan,
           res.status(200).json({
             message: "Ok",
-            // ! 36,37번 임시 대체
-            nonMember1: locationArr[0],
-            nonMember2: locationArr[1],
           });
         }
       }
@@ -57,10 +54,8 @@ module.exports = {
         if (!userInfo) {
           res.status(400).json({ message: "Not authorized" });
         } else {
-          // req.session.userId = userInfo.dataValues.id;  // 1
+          req.session.userId = userInfo.dataValues.id; // 1
           res.status(200).json({
-            // ! 60번 줄 임시 대체
-            userId: userInfo.dataValues.id,
             message: "Ok",
           });
         }
