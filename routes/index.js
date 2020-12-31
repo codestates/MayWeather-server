@@ -23,9 +23,7 @@ router.post("/signup", signup.post);
 router.post("/login", login.post);
 
 // * GET /content
-// router.get("/content", content.get);
-// ! test
-router.post("/content", content.post);
+router.get("/content", content.get);
 
 // * GET /friends
 router.post("/friends", friends.post);
