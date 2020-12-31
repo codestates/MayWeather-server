@@ -3,7 +3,7 @@ const sequelize = require("sequelize");
 const Op = sequelize.Op; //
 
 module.exports = {
-  get: async (req, res) => {{
+  get: async (req, res) => {
     console.log("req.session.userId in content.js>>>>", req.session.userId);
 
     // 비회원, 회원 둘 중 하나도 로그인 안해서 세션 객체 없을 때
@@ -18,7 +18,7 @@ module.exports = {
       location = req.session.userId1; // ex) location = 'seoul' 담아줌
       // 비회원이 지역 2개 선택했다면?
       if (req.session.userId2) {
-      location = location + "," + req.session.userId2;
+        location = location + "," + req.session.userId2;
       }
       res.status(200).json({
         location, // ex) 'seoul' or 'seoul, incheon'
