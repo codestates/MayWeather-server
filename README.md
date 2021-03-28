@@ -1,8 +1,8 @@
+## 🏠 [Notion 문서](https://www.notion.so/MayWeather-3a61f564530246c0954956dd8e1902e2) 
+
 # Welcome to MayWeather!☀️
 
 ### MayWeather는 날씨 정보 제공 웹 서비스입니다.
-
-## 🏠 [Notion 문서](https://www.notion.so/MayWeather-3a61f564530246c0954956dd8e1902e2) 
 
 ## Landing Page
 ![](https://images.velog.io/images/qmasem/post/3c1977ef-c2b4-4c17-bed6-f90eb2ea79b8/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202021-03-28%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%209.58.22.png)
