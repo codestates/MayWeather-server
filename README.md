@@ -25,7 +25,7 @@
 ***
 
 ##  API 문서
-📎 gitbook 
+📎 [gitbook](https://app.gitbook.com/@mayweather/s/mayweather-api/) 
 
 ## Team members
 
