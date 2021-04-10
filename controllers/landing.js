@@ -1,5 +1,4 @@
 const axios = require("axios");
-const moment = require("moment");
 require("dotenv").config();
 
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
@@ -13,9 +12,10 @@ module.exports = {
       // ! 현재 날씨 구하기, 섭씨 온도(&units=metric) (강수량 안 나옴)
       // api.openweathermap.org/data/2.5/weather?id={city id}&appid={API key}&lang={lang}&units=metric
       
-        const getPresentWeatherawait = await axios(
+        const getPresentWeather = await axios(
           `http://api.openweathermap.org/data/2.5/weather?id=${SEOUL_ID}&appid=${WEATHER_API_KEY}&lang=kr&units=metric`
           );                
+        console.log("🚀 ~ file: landing.js ~ line 19 ~ get: ~ getPresentWeather", getPresentWeather.data)
         
       //!  전 날 온도 구하기 (강수량 안 나옴)
       // https://api.openweathermap.org/data/2.5/onecall/timemachine?lat={lat}&lon={lon}&dt={time}&appid={API key}
@@ -62,18 +62,18 @@ module.exports = {
             // )
             // console.log("🚀 ~ file: landing.js ~ line 50 ~ get: ~ getWeatherMap", getWeatherMap)
 
-      if (getPresentWeatherawait.data) {
+      if (getPresentWeather.data) {
         res.status(200).json({
-          temp: getPresentWeatherawait.data.main.temp,
-          feelLike: getPresentWeatherawait.data.main.feels_like,
-          humidity: getPresentWeatherawait.data.main.humidity,
-          tempMin: getPresentWeatherawait.data.main.temp_min,
-          tempMax: getPresentWeatherawait.data.main.temp_max,
-          weatherDescription: getPresentWeatherawait.data.weather[0].description,
-          weatherIcon: getPresentWeatherawait.data.weather[0].icon,
-          windSpeed: getPresentWeatherawait.data.wind.speed,
-          windDeg: getPresentWeatherawait.data.wind.deg,
-          tempDifferenceYesterday: getYesterdayWeather.data.current.temp - getPresentWeatherawait.data.main.temp,
+          temp: getPresentWeather.data.main.temp,
+          feelLike: getPresentWeather.data.main.feels_like,
+          humidity: getPresentWeather.data.main.humidity,
+          tempMin: getPresentWeather.data.main.temp_min,
+          tempMax: getPresentWeather.data.main.temp_max,
+          weatherDescription: getPresentWeather.data.weather[0].description,
+          weatherIcon: getPresentWeather.data.weather[0].icon,
+          windSpeed: getPresentWeather.data.wind.speed,
+          windDeg: getPresentWeather.data.wind.deg,
+          tempDifferenceYesterday: getYesterdayWeather.data.current.temp - getPresentWeather.data.main.temp,
           airQualityIndex: getPresentAirPollution.data.list[0].main.aqi,
           // getWeatherMap: getWeatherMap.data
         });

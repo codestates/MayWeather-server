@@ -4,6 +4,7 @@ const router = express.Router();
 
 const {
   landing,
+  myLocation,
   // signup,
   // login,
   // content,
@@ -15,6 +16,9 @@ const {
 
 // * GET /
 router.get("/", landing.get);
+
+// GET /my-location
+router.post("/myLocation", myLocation.post)
 
 // // * POST /signup
 // router.post("/signup", signup.post);
