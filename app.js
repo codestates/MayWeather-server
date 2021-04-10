@@ -1,3 +1,5 @@
+const https = require('https');
+const fs = require('fs');
 const express = require("express");
 const mysql = require("mysql");
 const session = require("express-session");
@@ -59,15 +61,12 @@ app.use(
 
 app.use("/", router);
 
-// https
-//   .createServer(
-//     {
-//       key: fs.readFileSync(__dirname + "/key.pem", "utf-8"),
-//       cert: fs.readFileSync(__dirname + "/cert.pem", "utf-8"),
-//     },
-app
-  // )
-  .listen(443, () => {
-    //  http : 80, https: 443 바꿔주기
-    console.log("server on https 443");
-  });
+https
+  .createServer(
+    {
+      key: fs.readFileSync(__dirname + '/key.pem', 'utf-8'),
+      cert: fs.readFileSync(__dirname + '/cert.pem', 'utf-8'),
+    },
+    app.use("/", router)
+  )
+  .listen(3002);
