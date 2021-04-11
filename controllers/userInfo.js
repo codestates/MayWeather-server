@@ -2,19 +2,20 @@ const { User, Pet } = require('../models');
 
 module.exports = {
     get: async (req, res) => {
-        console.log('req.session.userId>>>>>', req.session.userId)
+        const { userId } = req.session
+        console.log("🚀 ~ file: userInfo.js ~ line 6 ~ get: ~ userId", userId)
         try{
             const userInfo = await User.findOne({                
                 where: {
-                    id: req.session.userId
+                    id: userId
                 }
             })
             console.log("🚀 ~ file: userInfo.js ~ line 12 ~ get: ~ userInfo", userInfo)
             
             if (userInfo.dataValues) {
                 res.status(200).json({
-                    id: userInfo.dataValues.userId,
-                    name: userInfo.dataValues.username,
+                    email: userInfo.dataValues.email,
+                    name: userInfo.dataValues.name,
                 })
             } else {
                  res.status(404).json({

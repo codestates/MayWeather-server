@@ -8,10 +8,10 @@ const {
   userInfo,
   signUp,
   signIn,
+  logout,
   // content,
   // friends,
   // mypage,
-  // logout,
   // callback,
 } = require("../controllers");
 
@@ -28,7 +28,10 @@ router.post("/sign-up", signUp.post);
 router.post("/sign-in", signIn.post);
 
 // * GET /userInfo
-router.get("/userInfo", userInfo.get);
+router.get("/user-info", userInfo.get);
+
+// * POST /logout
+router.post("/logout", logout.post);
 
 // // * GET /friends
 // router.post("/friends", friends.post);
@@ -36,8 +39,6 @@ router.get("/userInfo", userInfo.get);
 // // * POST /mypage
 // router.post("/mypage", mypage.post);
 
-// // * POST /logout
-// router.post("/logout", logout.post);
 
 // // * POST /callback Authorization
 // router.post("/callback", callback.post);

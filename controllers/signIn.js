@@ -3,14 +3,14 @@ const { User } = require("../models");
 module.exports = {
     post: async (req, res) => {
         try{
-            const { userId, password } = req.body;
+            const { email, password } = req.body;
             console.log("🚀 ~ file: signIn.js ~ line 7 ~ post: ~ password", password)
-            console.log("🚀 ~ file: signIn.js ~ line 7 ~ post: ~ userId", userId)
+            console.log("🚀 ~ file: signIn.js ~ line 7 ~ post: ~ email", email)
             
 
-            if (userId && password) {
+            if (email && password) {
                 const userInfo = await User.findOne({
-                    where: { userId, password }
+                    where: { email, password }
                   });
                 console.log("🚀 ~ file: signIn.js ~ line 14 ~ post: ~ userInfo", userInfo)
                  

@@ -4,5 +4,6 @@ module.exports = {
   signIn: require("./signIn"),
   signUp: require("./signUp"),
   userInfo: require("./userInfo"),
+  logout: require("./logout")
   // callback: require("./callback"),
 };
