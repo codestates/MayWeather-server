@@ -4,15 +4,15 @@ module.exports = {
     post: async (req, res) => {
         try{
             const { email, password } = req.body;
-            console.log("🚀 ~ file: signIn.js ~ line 7 ~ post: ~ password", password)
-            console.log("🚀 ~ file: signIn.js ~ line 7 ~ post: ~ email", email)
+            // console.log("🚀 ~ file: signIn.js ~ line 7 ~ post: ~ password", password)
+            // console.log("🚀 ~ file: signIn.js ~ line 7 ~ post: ~ email", email)
             
 
             if (email && password) {
                 const userInfo = await User.findOne({
                     where: { email, password }
                   });
-                console.log("🚀 ~ file: signIn.js ~ line 14 ~ post: ~ userInfo", userInfo)
+                // console.log("🚀 ~ file: signIn.js ~ line 14 ~ post: ~ userInfo", userInfo)
                  
 
                 if(!userInfo) {

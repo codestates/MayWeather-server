@@ -61,7 +61,7 @@ module.exports = {
         // const SEOUL_LON = process.env.SEOUL_LON;
         // const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
       const weatherData = await getWeather(SEOUL_ID, SEOUL_LAT, SEOUL_LON, WEATHER_API_KEY)
-      console.log("🚀 ~ file: landing.js ~ line 63 ~ //getWeather ~ weatherData", weatherData)
+      // console.log("🚀 ~ file: landing.js ~ line 63 ~ //getWeather ~ weatherData", weatherData)
       
        if (weatherData) {
         res.status(200).json({
@@ -99,7 +99,7 @@ module.exports = {
       // console.log("🚀 ~ file: landing.js ~ line 98 ~ post: ~ getLocation", getLocation)
       const { name, number, latitude, longitude } = getLocation.dataValues;
       const weatherData = await getWeather(number, latitude, longitude, WEATHER_API_KEY)
-      console.log("🚀 ~ file: landing.js ~ line 63 ~ //getWeather ~ weatherData", weatherData)
+      // console.log("🚀 ~ file: landing.js ~ line 63 ~ //getWeather ~ weatherData", weatherData)
       
        if (weatherData) {
         res.status(200).json({
