@@ -1,3 +1,4 @@
+const { Location, User, User_Location } = require("../models");
 const axios = require("axios");
 require("dotenv").config();
 
@@ -6,36 +7,24 @@ const SEOUL_ID = process.env.SEOUL_ID;
 const SEOUL_LON = process.env.SEOUL_LON;
 const SEOUL_LAT = process.env.SEOUL_LAT;
 
-module.exports = {
-  get: async (req, res) => {
-    try{
-      // ! 현재 날씨 구하기, 섭씨 온도(&units=metric) (강수량 안 나옴)
-      // api.openweathermap.org/data/2.5/weather?id={city id}&appid={API key}&lang={lang}&units=metric
-      
-        const getPresentWeather = await axios(
-          `http://api.openweathermap.org/data/2.5/weather?id=${SEOUL_ID}&appid=${WEATHER_API_KEY}&lang=kr&units=metric`
-          );                
-        // console.log("🚀 ~ file: landing.js ~ line 19 ~ get: ~ getPresentWeather", getPresentWeather.data)
+const getWeather = async (cityId, cityLat, cityLon, weatherApiKey) => {
+    const result = {}
+    // ! 현재 날씨 구하기, 섭씨 온도(&units=metric) 
+    // api.openweathermap.org/data/2.5/weather?id={city id}&appid={API key}&lang={lang}&units=metric      
+    const getPresentWeather = await axios(
+        `http://api.openweathermap.org/data/2.5/weather?id=${cityId}&appid=${weatherApiKey}&lang=kr&units=metric`
+        );                
+    //!  전 날 온도 구하기 (강수량 안 나옴)
+    // https://api.openweathermap.org/data/2.5/onecall/timemachine?lat={lat}&lon={lon}&dt={time}&appid={API key}
+        const unixTime = parseInt(new Date().getTime() / 1000) - 86400;
+         const getYesterdayWeather = await axios(
+        `https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${cityLat}&lon=${cityLon}&dt=${unixTime}&appid=${weatherApiKey}&lang=kr&units=metric`            
+        )
         
-      //!  전 날 온도 구하기 (강수량 안 나옴)
-      // https://api.openweathermap.org/data/2.5/onecall/timemachine?lat={lat}&lon={lon}&dt={time}&appid={API key}
-          const unixTime = parseInt(new Date().getTime() / 1000) - 86400;
-          // console.log("🚀 ~ file: landing.js ~ line 23 ~ get: ~ unixTime", unixTime)
-
-          const getYesterdayWeather = await axios(
-            `https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${SEOUL_LAT}&lon=${SEOUL_LON}&dt=${unixTime}&appid=${WEATHER_API_KEY}&lang=kr&units=metric`            
-          )
-          
-          // console.log("🚀 ~ file: landing.js ~ line 26 ~ get: ~ getYesterdayWeather", getYesterdayWeather.data.current.temp)
-          
-          
-
-
       // ! 현재 대기 오염
       // http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={API key}
-
           const getPresentAirPollution = await axios(
-            `http://api.openweathermap.org/data/2.5/air_pollution?lat=${SEOUL_LAT}&lon=${SEOUL_LON}&appid=${WEATHER_API_KEY}&lang=kr`
+            `http://api.openweathermap.org/data/2.5/air_pollution?lat=${cityLat}&lon=${cityLon}&appid=${weatherApiKey}&lang=kr`
           );
           // console.log("🚀 ~ file: landing.js ~ line 26 ~ get: ~ getPresentAirPollution", getPresentAirPollution.data.list)
           // main
@@ -49,33 +38,45 @@ module.exports = {
             // components.pm2_5PM 2.5 농도 ( 미립자 물질 ), μg / m 3
             // components.pm10PM 10 농도 ( 거친 입자상 물질 ), μg / m 3
             // components.nh3NH 3 농도 ( 암모니아 ), μg / m 3
-          
-      // ! 지도
-      // https://tile.openweathermap.org/map/{layer}/{z}/{x}/{y}.png?appid={API key}
-      // layer: temp_new
-      // {z}	필수	줌 레벨 수
-      // {x}	필수	x 타일 좌표의 수
-      // {y}	필수	y 타일 좌표의 수
+          result['temp'] = getPresentWeather.data.main.temp;
+          result['feelLike'] = getPresentWeather.data.main.feels_like;
+          result['humidity'] = getPresentWeather.data.main.humidity;
+          result['tempMin'] = getPresentWeather.data.main.temp_min;
+          result['tempMax'] = getPresentWeather.data.main.temp_max;
+          result['weatherDescription'] = getPresentWeather.data.weather[0].description;
+          result['weatherIcon'] = getPresentWeather.data.weather[0].icon;
+          result['windSpeed'] = getPresentWeather.data.wind.speed;
+          result['windDeg'] = getPresentWeather.data.wind.deg;
+          result['tempDifferenceYesterday'] = getYesterdayWeather.data.current.temp - getPresentWeather.data.main.temp;
+          result['airQualityIndex'] = getPresentAirPollution.data.list[0].main.aqi;
+          return result
+    }
 
-            // const getWeatherMap = await axios(
-            //   `https://tile.openweathermap.org/map/temp_new/10/10/10.png?appid=${WEATHER_API_KEY}`
-            // )
-            // console.log("🚀 ~ file: landing.js ~ line 50 ~ get: ~ getWeatherMap", getWeatherMap)
-
-      if (getPresentWeather.data) {
+module.exports = {
+  get: async (req, res) => {
+    try{
+      // const getWeather = async (cityId, cityLat, cityLon, weatherApiKey) => {
+        // const SEOUL_ID = process.env.SEOUL_ID;
+        // const SEOUL_LAT = process.env.SEOUL_LAT;
+        // const SEOUL_LON = process.env.SEOUL_LON;
+        // const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
+      const weatherData = await getWeather(SEOUL_ID, SEOUL_LAT, SEOUL_LON, WEATHER_API_KEY)
+      console.log("🚀 ~ file: landing.js ~ line 63 ~ //getWeather ~ weatherData", weatherData)
+      
+       if (weatherData) {
         res.status(200).json({
-          temp: getPresentWeather.data.main.temp,
-          feelLike: getPresentWeather.data.main.feels_like,
-          humidity: getPresentWeather.data.main.humidity,
-          tempMin: getPresentWeather.data.main.temp_min,
-          tempMax: getPresentWeather.data.main.temp_max,
-          weatherDescription: getPresentWeather.data.weather[0].description,
-          weatherIcon: getPresentWeather.data.weather[0].icon,
-          windSpeed: getPresentWeather.data.wind.speed,
-          windDeg: getPresentWeather.data.wind.deg,
-          tempDifferenceYesterday: getYesterdayWeather.data.current.temp - getPresentWeather.data.main.temp,
-          airQualityIndex: getPresentAirPollution.data.list[0].main.aqi,
-          // getWeatherMap: getWeatherMap.data
+          cityName: '서울',
+          temp: weatherData.temp,
+          feelLike: weatherData.feelLike,
+          humidity: weatherData.humidity,
+          tempMin: weatherData.tempMin,
+          tempMax: weatherData.tempMax,
+          weatherDescription: weatherData.weatherDescription,
+          weatherIcon: weatherData.weatherIcon,
+          windSpeed: weatherData.windSpeed,
+          windDeg: weatherData.windDeg,
+          tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
+          airQualityIndex: weatherData.airQualityIndex,
         });
       } else {
         res.status(507).json({
@@ -86,4 +87,42 @@ module.exports = {
       console.error(err)
     }
   },
+  post: async (req, res) => {
+    try{
+      // console.log("🚀 ~ file: landing.js ~ line 11 ~ get: ~ req", req.body)
+      const { city } = req.body
+      const getLocation = await Location.findOne({
+        where:{
+          name: city
+        }
+      })  
+      // console.log("🚀 ~ file: landing.js ~ line 98 ~ post: ~ getLocation", getLocation)
+      const { name, number, latitude, longitude } = getLocation.dataValues;
+      const weatherData = await getWeather(number, latitude, longitude, WEATHER_API_KEY)
+      console.log("🚀 ~ file: landing.js ~ line 63 ~ //getWeather ~ weatherData", weatherData)
+      
+       if (weatherData) {
+        res.status(200).json({
+          cityName: name,
+          temp: weatherData.temp,
+          feelLike: weatherData.feelLike,
+          humidity: weatherData.humidity,
+          tempMin: weatherData.tempMin,
+          tempMax: weatherData.tempMax,
+          weatherDescription: weatherData.weatherDescription,
+          weatherIcon: weatherData.weatherIcon,
+          windSpeed: weatherData.windSpeed,
+          windDeg: weatherData.windDeg,
+          tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
+          airQualityIndex: weatherData.airQualityIndex,
+        });
+      } else {
+        res.status(507).json({
+          message: "There is an error with the API used by the server.",
+        });
+      }
+    } catch(err) {
+      console.error(err)
+    }
+  }
 };

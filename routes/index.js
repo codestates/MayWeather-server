@@ -18,8 +18,11 @@ const {
 // * GET /
 router.get("/", landing.get);
 
+// * POST /
+router.post("/", landing.post);
+
 // GET /my-location
-router.post("/myLocation", myLocation.post)
+router.post("/my-location", myLocation.post)
 
 // * POST /sign-up
 router.post("/sign-up", signUp.post);
