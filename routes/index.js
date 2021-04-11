@@ -3,38 +3,54 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  home,
-  signup,
-  login,
-  content,
-  friends,
-  mypage,
+  landing,
+  myLocation,
+  userInfo,
+  signUp,
+  signIn,
   logout,
-  callback,
+  fineDust,
+  // content,
+  // friends,
+  // mypage,
+  // callback,
 } = require("../controllers");
 
 // * GET /
-router.get("/", home.get);
+router.get("/", landing.get);
 
-// * POST /signup
-router.post("/signup", signup.post);
+// * POST /
+router.post("/", landing.post);
 
-// * POST /login
-router.post("/login", login.post);
+// GET /my-location
+router.get("/my-location", myLocation.get)
 
-// * GET /content
-router.get("/content", content.get);
+// POST /my-location
+router.post("/my-location", myLocation.post)
 
-// * GET /friends
-router.post("/friends", friends.post);
+// * POST /sign-up
+router.post("/sign-up", signUp.post);
 
-// * POST /mypage
-router.post("/mypage", mypage.post);
+// * POST /sign-in
+router.post("/sign-in", signIn.post);
+
+// * GET /userInfo
+router.get("/user-info", userInfo.get);
 
 // * POST /logout
 router.post("/logout", logout.post);
 
-// * POST /callback Authorization
-router.post("/callback", callback.post);
+// * GET /fineDust
+router.get("/fine-dust", fineDust.get);
+
+// * GET /fineDust
+router.post("/fine-dust", fineDust.post);
+
+// // * POST /mypage
+// router.post("/mypage", mypage.post);
+
+
+// // * POST /callback Authorization
+// router.post("/callback", callback.post);
 
 module.exports = router;
