@@ -9,6 +9,7 @@ const {
   signUp,
   signIn,
   logout,
+  fineDust,
   // content,
   // friends,
   // mypage,
@@ -36,8 +37,11 @@ router.get("/user-info", userInfo.get);
 // * POST /logout
 router.post("/logout", logout.post);
 
-// // * GET /friends
-// router.post("/friends", friends.post);
+// * GET /fineDust
+router.get("/fine-dust", fineDust.get);
+
+// * GET /fineDust
+router.post("/fine-dust", fineDust.post);
 
 // // * POST /mypage
 // router.post("/mypage", mypage.post);
