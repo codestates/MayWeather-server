@@ -5,8 +5,9 @@ const router = express.Router();
 const {
   landing,
   myLocation,
-  // signup,
-  // login,
+  userInfo,
+  signUp,
+  signIn,
   // content,
   // friends,
   // mypage,
@@ -20,14 +21,14 @@ router.get("/", landing.get);
 // GET /my-location
 router.post("/myLocation", myLocation.post)
 
-// // * POST /signup
-// router.post("/signup", signup.post);
+// * POST /sign-up
+router.post("/sign-up", signUp.post);
 
-// // * POST /login
-// router.post("/login", login.post);
+// * POST /sign-in
+router.post("/sign-in", signIn.post);
 
-// // * GET /content
-// router.get("/content", content.get);
+// * GET /userInfo
+router.get("/userInfo", userInfo.get);
 
 // // * GET /friends
 // router.post("/friends", friends.post);

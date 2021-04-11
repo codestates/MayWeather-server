@@ -15,12 +15,12 @@ module.exports = {
         const getPresentWeather = await axios(
           `http://api.openweathermap.org/data/2.5/weather?id=${SEOUL_ID}&appid=${WEATHER_API_KEY}&lang=kr&units=metric`
           );                
-        console.log("🚀 ~ file: landing.js ~ line 19 ~ get: ~ getPresentWeather", getPresentWeather.data)
+        // console.log("🚀 ~ file: landing.js ~ line 19 ~ get: ~ getPresentWeather", getPresentWeather.data)
         
       //!  전 날 온도 구하기 (강수량 안 나옴)
       // https://api.openweathermap.org/data/2.5/onecall/timemachine?lat={lat}&lon={lon}&dt={time}&appid={API key}
           const unixTime = parseInt(new Date().getTime() / 1000) - 86400;
-          console.log("🚀 ~ file: landing.js ~ line 23 ~ get: ~ unixTime", unixTime)
+          // console.log("🚀 ~ file: landing.js ~ line 23 ~ get: ~ unixTime", unixTime)
 
           const getYesterdayWeather = await axios(
             `https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${SEOUL_LAT}&lon=${SEOUL_LON}&dt=${unixTime}&appid=${WEATHER_API_KEY}&lang=kr&units=metric`            
