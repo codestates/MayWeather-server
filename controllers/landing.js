@@ -89,14 +89,14 @@ module.exports = {
   },
   post: async (req, res) => {
     try{
-      // console.log("🚀 ~ file: landing.js ~ line 11 ~ get: ~ req", req.body)
+      console.log("🚀 ~ file: landing.js ~ line 11 ~ get: ~ req", req.body)
       const { city } = req.body
       const getLocation = await Location.findOne({
         where:{
           name: city
         }
       })  
-      // console.log("🚀 ~ file: landing.js ~ line 98 ~ post: ~ getLocation", getLocation)
+      console.log("🚀 ~ file: landing.js ~ line 98 ~ post: ~ getLocation", getLocation)
       const { name, number, latitude, longitude } = getLocation.dataValues;
       const weatherData = await getWeather(number, latitude, longitude, WEATHER_API_KEY)
       // console.log("🚀 ~ file: landing.js ~ line 63 ~ //getWeather ~ weatherData", weatherData)

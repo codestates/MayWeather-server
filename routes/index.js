@@ -23,6 +23,9 @@ router.get("/", landing.get);
 router.post("/", landing.post);
 
 // GET /my-location
+router.get("/my-location", myLocation.get)
+
+// POST /my-location
 router.post("/my-location", myLocation.post)
 
 // * POST /sign-up
