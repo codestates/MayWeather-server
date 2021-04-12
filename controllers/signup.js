@@ -51,18 +51,7 @@ module.exports = {
       //! 지역 2개 선택한 경우
        else {
         console.log('지역 2개')
-      //! 1. User 테이블에 정보 입력
-      // const [user, created] = await User.findOrCreate({
-      //   where: {
-      //     email
-      //   },
-      //   defaults: {
-      //     name,
-      //     password,
-      //     email,
-      //   },
-      // });
-      
+    
       //! 2. get Location ID
       const getLocation = await Location.findAll({
         where: {
