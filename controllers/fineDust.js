@@ -71,8 +71,8 @@ module.exports = {
                     nh3: airPollutionData.nh3
                 })
             } else {
-                res.status(400).json({
-                    message: "Bad request"
+                res.status(500).json({
+                    message: "Server Error"
                 })
             }
         } catch(err) {
@@ -83,34 +83,39 @@ module.exports = {
         try{
             // console.log("🚀 ~ file: landing.js ~ line 11 ~ get: ~ req", req.body)
             const { city } = req.body
-            const getLocation = await Location.findOne({
-                where:{
-                name: city
+            if (city) {
+                const getLocation = await Location.findOne({
+                    where:{
+                    name: city
+                    }
+                })  
+                // console.log("🚀 ~ file: landing.js ~ line 98 ~ post: ~ getLocation", getLocation)
+                const { name, latitude, longitude } = getLocation.dataValues;
+                const airPollutionData = await getAirPollutionData(latitude, longitude, WEATHER_API_KEY)
+                console.log("🚀 ~ file: fineDust.js ~ line 94 ~ airPollutionData", airPollutionData)
+                if(airPollutionData) {
+                    res.status(200).json({
+                        cityName: name,
+                        airQualityIndex: airPollutionData.airQualityIndex,
+                        co: airPollutionData.co,
+                        no: airPollutionData.no,
+                        no2: airPollutionData.no2,
+                        o3: airPollutionData.o3,
+                        so2: airPollutionData.so2,
+                        pm2_5: airPollutionData.pm2_5,
+                        pm10: airPollutionData.pm10,
+                        nh3: airPollutionData.nh3
+                    })
+                } else {
+                    res.status(404).json({
+                        message: "Not Found"
+                    })
                 }
-            })  
-            // console.log("🚀 ~ file: landing.js ~ line 98 ~ post: ~ getLocation", getLocation)
-            const { name, latitude, longitude } = getLocation.dataValues;
-            const airPollutionData = await getAirPollutionData(latitude, longitude, WEATHER_API_KEY)
-            console.log("🚀 ~ file: fineDust.js ~ line 94 ~ airPollutionData", airPollutionData)
-            if(airPollutionData) {
-                res.status(200).json({
-                    cityName: name,
-                    airQualityIndex: airPollutionData.airQualityIndex,
-                    co: airPollutionData.co,
-                    no: airPollutionData.no,
-                    no2: airPollutionData.no2,
-                    o3: airPollutionData.o3,
-                    so2: airPollutionData.so2,
-                    pm2_5: airPollutionData.pm2_5,
-                    pm10: airPollutionData.pm10,
-                    nh3: airPollutionData.nh3
-                })
             } else {
                 res.status(400).json({
-                    message: "Bad request"
+                        message: "Bad Request"
                 })
             }
-            
         } catch(err) {
             console.error(err)
         }

@@ -16,7 +16,7 @@ module.exports = {
                  
 
                 if(!userInfo) {
-                    res.status(400).json({ message: "Not authorized"})
+                    res.status(401).json({ message: "Unauthorized"})
                 } else{
                     req.session.userId = userInfo.dataValues.id // primary key
                     res.status(200).json({

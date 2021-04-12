@@ -100,8 +100,8 @@ module.exports = {
                         
                     })
                 } else {
-                    res.status(400).json({
-                        message: "Bad request"
+                    res.status(404).json({
+                        message: "Not Found"
                     })
                 }
             } //! 지역 1개 선택 유저 
@@ -144,8 +144,8 @@ module.exports = {
                         tempDifferenceYesterday1: getWeatherData.tempDifferenceYesterday,
                     })
                 } else {
-                    res.status(400).json({
-                        message: "Bad request"
+                    res.status(404).json({
+                        message: "Not Found"
                     })
                 }
             }

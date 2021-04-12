@@ -37,8 +37,8 @@ module.exports = {
                         cityName2: getLocation[1].dataValues.name
                     })
                 } else {
-                     res.status(404).json({
-                        message: "Not found"
+                     res.status(401).json({
+                        message: "Unauthorized"
                     })
                 }
             } // 지역 1개 고른 유저
@@ -56,8 +56,8 @@ module.exports = {
                         cityName1: getLocation[0].dataValues.name,
                     })
                 } else {
-                     res.status(404).json({
-                        message: "Not found"
+                     res.status(401).json({
+                        message: "Unauthorized"
                     })
                 }
             }
