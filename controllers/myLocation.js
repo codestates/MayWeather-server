@@ -31,7 +31,7 @@ const getWeather = async (cityId, cityLat, cityLon, weatherApiKey) => {
 module.exports = {
     get: async (req, res) => {
         try{
-            // console.log('session', req.session.userId)
+            console.log('session', req.session.userId)
             const { userId } = req.session;
             const getUserInfo = await User.findOne({
                 include:[{
@@ -41,9 +41,10 @@ module.exports = {
                     id: userId
                 }
             })
-            console.log("🚀 ~ file: myLocation.js ~ line 41 ~ get: ~ getUserInfo", getUserInfo.dataValues.User_Locations[0].locationId)
+            console.log("🚀 ~ file: myLocation.js ~ line 41 ~ get: ~ getUserInfo", getUserInfo.dataValues.User_Locations[0]) 
+            console.log('getUserInfo.dataValues.User_Locations[1]',getUserInfo.dataValues.User_Locations[1])
             // ! 지역 2개 선택 유저
-            if (getUserInfo.dataValues.User_Locations[1].locationId) {
+            if (getUserInfo.dataValues.User_Locations[1]) {
                 const locationId_1 = getUserInfo.dataValues.User_Locations[0].locationId;
                 const locationId_2 = getUserInfo.dataValues.User_Locations[1].locationId;
                 const getLocationData = await Location.findAll({
@@ -103,6 +104,50 @@ module.exports = {
                         message: "Bad request"
                     })
                 }
+            } //! 지역 1개 선택 유저 
+            else {
+                const locationId_1 = getUserInfo.dataValues.User_Locations[0].locationId;
+                const getLocationData = await Location.findOne({
+                    where:{
+                        id: locationId_1
+                    }
+                })
+                console.log("🚀 ~ file: myLocation.js ~ line 114 ~ get: ~ getLocationData", getLocationData)
+                
+                const getWeatherData = await getWeather(getLocationData.dataValues.number, getLocationData.dataValues.latitude, getLocationData.dataValues.longitude, WEATHER_API_KEY )
+                console.log("🚀 ~ file: myLocation.js ~ line 58 ~ //getWeather ~ getWeatherData", getWeatherData)
+                
+                // temp: 13.02,
+                // feelLike: 11.79,
+                // humidity: 54,
+                // tempMin: 12,
+                // tempMax: 14,
+                // weatherDescription: '튼구름',
+                // weatherIcon: '04n',
+                // windSpeed: 0.51,
+                // windDeg: 280,
+                // tempDifferenceYesterday: -7.05
+                
+                if (getWeatherData) {
+                    res.status(200).json({
+                        // 1
+                        cityName1: getLocationData.dataValues.name,
+                        temp1: getWeatherData.temp,
+                        feelLike1: getWeatherData.feelLike,
+                        humidity1: getWeatherData.humidity,
+                        tempMin1: getWeatherData.tempMin,
+                        tempMax1: getWeatherData.tempMax,
+                        weatherDescription1: getWeatherData.weatherDescription,
+                        weatherIcon1: getWeatherData.weatherIcon,
+                        windSpeed1: getWeatherData.windSpeed,
+                        windDeg1: getWeatherData.windDeg,
+                        tempDifferenceYesterday1: getWeatherData.tempDifferenceYesterday,
+                    })
+                } else {
+                    res.status(400).json({
+                        message: "Bad request"
+                    })
+                }
             }
 
         } catch(err) {
@@ -132,7 +177,7 @@ module.exports = {
                 
                 if (createUserLocation) {
                     res.status(201).json({
-                        message: 'Created'
+                        city
                     })
                 } else {
                     res.status(404).json({
