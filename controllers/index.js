@@ -1,10 +1,10 @@
 module.exports = {
-  home: require("./home"),
-  signup: require("./signup"),
-  login: require("./login"),
-  content: require("./content"),
-  friends: require("./friends"),
-  mypage: require("./mypage"),
+  landing: require("./landing"),
+  myLocation: require("./myLocation"),
+  signIn: require("./signIn"),
+  signUp: require("./signUp"),
+  userInfo: require("./userInfo"),
   logout: require("./logout"),
-  callback: require("./callback"),
+  fineDust: require("./fineDust")
+  // callback: require("./callback"),
 };

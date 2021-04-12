@@ -13,9 +13,7 @@ module.exports = {
     // console.log("location>>>>", location); // busan
 
     // ! req.session.userId 유효성 검사 추가
-    // if (!id) {
-    // ! 임시
-    if (!userId) {
+    if (!id) {
       res.status(404).json({
         message: "Not Found",
       });
@@ -23,9 +21,7 @@ module.exports = {
 
     const getUserInfo = await User.findOne({
       // 유저 ID 찾기
-      // where: { id },
-      // ! test
-      where: { userId },
+      where: { id },
     });
     console.log(
       "🚀 ~ file: mypage.js ~ line 18 ~ post: ~ getUserInfo",

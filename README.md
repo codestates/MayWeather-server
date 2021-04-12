@@ -1,5 +1,3 @@
-# develop
-
 ## 🏠 [Notion 문서](https://www.notion.so/MayWeather-3a61f564530246c0954956dd8e1902e2) 
 
 # Welcome to MayWeather!☀️
@@ -27,7 +25,8 @@
 ***
 
 ##  API 문서
-📎 gitbook 
+
+📎 [gitbook](https://app.gitbook.com/@mayweather/s/mayweather-api/) 
 
 ## Team members
 
