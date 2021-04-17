@@ -10,6 +10,7 @@ const {
   signIn,
   logout,
   fineDust,
+  mypage,
   // content,
   // friends,
   // mypage,
@@ -23,10 +24,10 @@ router.get("/", landing.get);
 router.post("/", landing.post);
 
 // GET /my-location
-router.get("/my-location", myLocation.get)
+router.get("/my-location", myLocation.get);
 
 // POST /my-location
-router.post("/my-location", myLocation.post)
+router.post("/my-location", myLocation.post);
 
 // * POST /sign-up
 router.post("/sign-up", signUp.post);
@@ -46,9 +47,8 @@ router.get("/fine-dust", fineDust.get);
 // * GET /fineDust
 router.post("/fine-dust", fineDust.post);
 
-// // * POST /mypage
-// router.post("/mypage", mypage.post);
-
+// * POST /mypage
+router.post("/mypage", mypage.post);
 
 // // * POST /callback Authorization
 // router.post("/callback", callback.post);
