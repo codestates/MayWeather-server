@@ -48,7 +48,7 @@ router.get("/fine-dust", fineDust.get);
 router.post("/fine-dust", fineDust.post);
 
 // * POST /mypage
-router.post("/mypage", mypage.post);
+router.post("/mypage/:category", mypage.post);
 
 // // * POST /callback Authorization
 // router.post("/callback", callback.post);
