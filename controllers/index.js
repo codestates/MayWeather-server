@@ -5,6 +5,7 @@ module.exports = {
   signUp: require("./signUp"),
   userInfo: require("./userInfo"),
   logout: require("./logout"),
-  fineDust: require("./fineDust")
+  fineDust: require("./fineDust"),
+  mypage: require("./mypage"),
   // callback: require("./callback"),
 };
