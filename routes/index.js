@@ -50,6 +50,9 @@ router.post("/fine-dust", fineDust.post);
 // * POST /mypage
 router.post("/mypage/:category", mypage.post);
 
+// * DELETE /mypage
+router.delete("/mypage/:category", mypage.delete);
+
 // // * POST /callback Authorization
 // router.post("/callback", callback.post);
 

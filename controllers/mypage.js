@@ -173,4 +173,42 @@ module.exports = {
       console.error(err);
     }
   },
+  delete: async (req, res) => {
+    const { userId } = req.session;
+    const { category } = req.params;
+    const { location2 } = req.body;
+    // console.log(
+    //   "🚀 ~ file: mypage.js ~ line 179 ~ delete: ~ category",
+    //   category
+    // ); // location2
+    // console.log("req", req.body); // req { location2: '경기도' }
+    const getLocationId = await Location.findOne({
+      where: {
+        name: location2,
+      },
+    });
+    // console.log(
+    //   "🚀 ~ file: mypage.js ~ line 190 ~ delete: ~ getLocationId",
+    //   getLocationId.dataValues.id
+    // );
+    const removeUserLocation = await User_Location.destroy({
+      where: {
+        userId,
+        locationId: getLocationId.dataValues.id,
+      },
+    });
+    // console.log(
+    //   "🚀 ~ file: mypage.js ~ line 200 ~ delete: ~ removeUserLocation",
+    //   removeUserLocation
+    // );// 1
+    if (removeUserLocation === 1) {
+      res.status(200).json({
+        message: "OK",
+      });
+    } else {
+      res.status(401).json({
+        message: "Unauthorized",
+      });
+    }
+  },
 };
